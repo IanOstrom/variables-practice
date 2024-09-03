@@ -21,7 +21,7 @@ function spawnDuck () {
         . . . c c c c c c c c b b . . . 
         `, SpriteKind.Duckies)
     duckCount += 1
-    duckFarmer.sayText(duckCount)
+    duckFarmer.sayText(duckVelocity)
     duck.scale = 0.5
     duck.setPosition(randint(10, 150), randint(10, 110))
     duck.setVelocity(duckVelocity, duckVelocity)
@@ -30,8 +30,10 @@ function spawnDuck () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Duckies, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     duckCount += -1
-    duckFarmer.sayText(duckCount)
-    duckVelocity += 1
+    duckFarmer.sayText(duckVelocity)
+    if (duckVelocity <= maxDuckVelocity) {
+        duckVelocity += 1
+    }
 })
 function spawnHero () {
     duckFarmer = sprites.create(img`
@@ -66,9 +68,11 @@ function spawnHero () {
 let duckFarmer: Sprite = null
 let duckCount = 0
 let duck: Sprite = null
+let maxDuckVelocity = 0
 let duckVelocity = 0
-let maxDucks = 3
+let maxDucks = 10
 duckVelocity = 50
+maxDuckVelocity = 100
 info.setScore(0)
 scene.setBackgroundImage(img`
     9999999999999999bbbbbb66666666b777777777777777777777777777777777777d7669999999999999999999999999bbbbbb66666666b777777777777777777777777777777777777d766999999999
