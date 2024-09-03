@@ -1,5 +1,5 @@
 {
-    "name": "Variables practice",
+    "name": "Duck collector",
     "description": "",
     "dependencies": {
         "device": "*"
