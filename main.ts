@@ -27,6 +27,21 @@ function spawnDuck () {
     duck.setVelocity(duckVelocity, duckVelocity)
     duck.setBounceOnWall(true)
 }
+function setDifficulty () {
+    if (difficulty == 0) {
+        maxDucks = 5
+        duckVelocity = 25
+        maxDuckVelocity = 50
+    } else if (difficulty == 1) {
+        maxDucks = 3
+        duckVelocity = 50
+        maxDuckVelocity = 100
+    } else if (difficulty == 2) {
+        maxDucks = 1
+        duckVelocity = 75
+        maxDuckVelocity = 150
+    }
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Duckies, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     duckCount += -1
@@ -65,14 +80,13 @@ function spawnHero () {
     controller.moveSprite(duckFarmer)
     duckFarmer.setStayInScreen(true)
 }
+let maxDuckVelocity = 0
+let maxDucks = 0
+let duckVelocity = 0
 let duckFarmer: Sprite = null
 let duckCount = 0
 let duck: Sprite = null
-let maxDuckVelocity = 0
-let duckVelocity = 0
-let maxDucks = 10
-duckVelocity = 50
-maxDuckVelocity = 100
+let difficulty = 0
 info.setScore(0)
 scene.setBackgroundImage(img`
     9999999999999999bbbbbb66666666b777777777777777777777777777777777777d7669999999999999999999999999bbbbbb66666666b777777777777777777777777777777777777d766999999999
@@ -197,6 +211,11 @@ scene.setBackgroundImage(img`
     9999999999999666666666666666666666666666667777777769999999999999999999999999999999999999999996666666666666666666666666666677777777699999999999999999999999999999
     `)
 spawnHero()
+difficulty = 3
+while (difficulty != 2) {
+    difficulty = game.askForNumber("Choose difficulty: 0 to 2. Other numbers invalid.", 1)
+}
+setDifficulty()
 game.onUpdateInterval(1000, function () {
     if (duckCount < maxDucks) {
         spawnDuck()
